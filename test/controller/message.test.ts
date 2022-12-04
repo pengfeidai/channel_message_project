@@ -1,18 +1,16 @@
 import { createApp, close, createHttpRequest } from '@midwayjs/mock';
 import { Framework } from '@midwayjs/koa';
 
-describe('test/controller/user.test.ts', () => {
-
-  it('should POST /api/get_user', async () => {
+describe('test/controller/message.test.ts', () => {
+  it('should POST /api/message/list', async () => {
     // create app
     const app = await createApp<Framework>();
 
     // make request
-    const result = await createHttpRequest(app).get('/api/get_user').query({ uid: 123 });
-
+    const result = await createHttpRequest(app).post('/api/message/list').send({ channelId: 1, page: 1, limit: 10 });
     // use expect by jest
     expect(result.status).toBe(200);
-    expect(result.body.message).toBe('OK');
+    expect(result.body.msg).toBe('success');
 
     // close app
     await close(app);
